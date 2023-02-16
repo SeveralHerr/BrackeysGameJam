@@ -10,11 +10,11 @@ public class GameOverController : MonoBehaviour
     //public GameObject GameOverObject;
 
     [Inject]
-    private readonly IHungerManager _hungerManager;
+    private readonly IManager _hungerManager;
 
     private void Start()
     {
-        _hungerManager.Hunger
+        _hungerManager.Resource
             .Where(value => value <= 0)
             .Subscribe(_ =>  GameOver());
     }

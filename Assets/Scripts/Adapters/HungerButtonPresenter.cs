@@ -10,10 +10,13 @@ public class HungerButtonPresenter : MonoBehaviour
 {
     public Button _button;
 
-    private ReactiveProperty<bool> _canExecute = new ReactiveProperty<bool>();
+    private readonly ReactiveProperty<bool> _canExecute = new();
+
+    private readonly int _cooldown = 3;
+    private readonly int _increaseAmount = 5;
 
     [Inject]
-    private IHungerManager _manager;
+    private IManager _manager;
 
     void Start()
     {
@@ -22,8 +25,8 @@ public class HungerButtonPresenter : MonoBehaviour
         // Throttle clicks
         _button.BindToOnClick(_canExecute, (value) =>
         {
-            _manager.AddHunger(1);
-            return Observable.Timer(TimeSpan.FromSeconds(3)).AsUnitObservable();
+            _manager.Add(_increaseAmount);
+            return Observable.Timer(TimeSpan.FromSeconds(_cooldown)).AsUnitObservable();
         });
     }
 }

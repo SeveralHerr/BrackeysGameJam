@@ -12,15 +12,15 @@ public class HungerTextPresenter : MonoBehaviour
     private TextMeshProUGUI _text;
 
     [Inject]
-    private IHungerManager _manager;
+    private IManager _manager;
 
     public void Start()
     {
         _text = gameObject.GetComponent<TextMeshProUGUI>();;
 
-        _manager.Hunger.Subscribe(_ => UpdateText(_manager.Hunger.Value));
+        _manager.Resource.Subscribe(_ => UpdateText(_manager.Resource.Value));
 
-        UpdateText(_manager.Hunger.Value);
+        UpdateText(_manager.Resource.Value);
     }
 
     private void UpdateText(int value)
